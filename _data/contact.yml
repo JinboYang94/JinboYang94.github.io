@@ -5,19 +5,21 @@
 #  MIT Licensed
 
 -
-  type: github
-  icon: 'fab fa-github-alt'
+  type: Github
+  icon: 'fab fa-github'
+  noblank: true 
 -
-  type: twitter
+  type: Twitter
   icon: 'fab fa-twitter'
+  noblank: true 
 -
-  type: email
+  type: Email
   icon: 'fas fa-envelope'
   noblank: true            # open link in current tab
 -
-  type: rss
-  icon: 'fas fa-rss'
-  noblank: true
+  # type: rss
+  # icon: 'fas fa-rss'
+  # noblank: true
 
 # Uncomment and complete the url below to enable more contact options
 # -
@@ -25,9 +27,10 @@
 #   icon: 'fab fa-mastodon'   # icons powered by <https://fontawesome.com/>
 #   url:  ''                  # Fill with your mastodon account page
 # -
-#   type: linkedin
-#   icon: 'fab fa-linkedin'   # icons powered by <https://fontawesome.com/>
-#   url:  ''                  # Fill with your Linkedin homepage
+  type: Linkedin
+  icon: 'fab fa-linkedin'   # icons powered by <https://fontawesome.com/>
+  noblank: true
+  # url:  'www.linkedin.com/in/jinbo-yang'                  # Fill with your Linkedin homepage
 # -
 #   type: stack-overflow
 #   icon: 'fab fa-stack-overflow'

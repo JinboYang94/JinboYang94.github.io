@@ -58,7 +58,7 @@
 <div class="sidebar-bottom d-flex flex-wrap justify-content-around mt-4">
 
   {% if site.theme_mode == "dual" %}
-  <span id="mode-toggle-wrapper">
+  <span id="mode-toggle-wrapper" data-toggle="tooltip" title="Mode Change">
     {% include mode-toggle.html %}
   </span>
   <span class="icon-border"></span>
@@ -66,25 +66,33 @@
 
   {% for entry in site.data.contact %}
     {% capture url %}
-      {%- if entry.type == 'github' -%}
+      {%- if entry.type == 'Github' -%}
         https://github.com/{{ site.github.username }}
-      {%- elsif entry.type == 'twitter' -%}
+      {%- elsif entry.type == 'Twitter' -%}
         https://twitter.com/{{ site.twitter.username }}
-      {%- elsif entry.type == 'email' -%}
+      {%- elsif entry.type == 'Email' -%}
         {% assign email = site.social.email | split: '@' %}
         javascript:location.href = 'mailto:' + ['{{ email[0] }}','{{ email[1] }}'].join('@')
       {%- elsif entry.type == 'rss' -%}
         {{ "/feed.xml" | relative_url }}
+      {%- elsif entry.type == 'Linkedin' -%}
+        https://linkedin.com/in/{{ site.linkedin.username }}
       {%- else -%}
         {{ entry.url }}
       {%- endif -%}
     {% endcapture %}
 
     {% if url != '' %}
-    <a href="{{ url }}" aria-label="{{ entry.type }}" {% unless entry.noblank %}target="_blank" rel="noopener"{% endunless %}>
+    <a href="{{ url }}" aria-label="{{ entry.type }}" {% unless entry.noblank %}target="_blank" rel="noopener"{% endunless %} data-toggle="tooltip" title="{{ entry.type }}">
       <i class="{{ entry.icon }}"></i>
     </a>
     {% endif %}
   {% endfor %}
 
 </div>
+
+<script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>
