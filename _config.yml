@@ -54,7 +54,8 @@ google_site_verification: google_meta_tag_verification # change to your verifica
 baseurl: ''
 
 # Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
-# timezone: Asia/Shanghai
+timezone: Asia/Shanghai
+# timezone: UTC+8
 
 google_analytics:
   id: ''          # Fill with your Google Analytics ID
