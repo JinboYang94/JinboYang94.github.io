@@ -7,11 +7,11 @@ tags: [Java, Fundamental]
 math: true
 # image: /assets/img/sample/avatar.png
 ---
-# Java知识点总结
+# Java知识点总结(长期更新)
 
 ## JavaSE部分
 
-### A. 基础知识
+### **A. 基础知识**
 
 #### 1. 面向过程和面向对象的区别
 
@@ -48,6 +48,7 @@ math: true
 #### 3. Java Primitive Type
 
 **Java Primitive Data Types**
+
 | Data Type | Size | Description |
 |:-----------|:------|:-------------|
 | byte | 1 byte	| Stores whole numbers from -128 to 127 |
@@ -60,9 +61,11 @@ math: true
 | char | 2 bytes | Stores a single character/letter or ASCII values |
 
 **Java Type Conversion**
+
 ![TypeConversion](/assets/img/sample/type_conversion.png "Java Type Conversion")
 
 **Java Bit Manipulation**
+
 - Unary bitwise complement operator: ~
 >a = 5 = 0101  
 >~a = 1010 = 10  
@@ -108,5 +111,5 @@ math: true
 >b >>> 1 = 0111 1111 1111 1111 1111 1111 1111 1011 = 2147483643  
 >so >>> means a / 2<sup>n</sup>, insert to void left with 0, and set leftmost digit to 0
 
-### B. 常见Q&A
+### **B. 常见Q&A**
 
