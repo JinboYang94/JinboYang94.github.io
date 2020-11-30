@@ -24,7 +24,7 @@
       <div class="site-title">
         <a href="{{ '/' | relative_url }}">{{- site.title -}}</a>
       </div>
-      <div class="site-subtitle font-italic">{{- site.tagline -}}</div>
+      <div class="site-subtitle font-italic"><b><font color=#1d9690>{{- site.tagline -}}</font></b></div>
     </div>
   </div><!-- #profile-wrapper -->
 
@@ -33,7 +33,7 @@
     <li class="nav-item d-flex justify-content-center {% if page.layout == 'home' %}active{% endif %}">
       <a href="{{ '/' | relative_url }}" class="nav-link d-flex justify-content-center align-items-center w-100">
         <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i>
-        <span>{{ "HOME" }}</span>
+        <span data-toggle="tooltip" data-placement="right" title="HOME">{{ "HOME" }}</span>
       </a>
     </li>
     <!-- the real tabs -->
@@ -41,7 +41,7 @@
     <li class="nav-item d-flex justify-content-center {% if tab.url == page.url %}active{% endif %}">
       <a href="{{ tab.url | relative_url }}" class="nav-link d-flex justify-content-center align-items-center w-100">
         <i class="fa-fw {{ tab.icon }} ml-xl-3 mr-xl-3 unloaded"></i>
-        <span>{{ tab.title | upcase }}</span>
+        <span data-toggle="tooltip" data-placement="auto" title="{{ tab.title | upcase }}">{{ tab.title | upcase }}</span>
       </a>
     </li> <!-- .nav-item -->
     {% endfor %}
@@ -53,7 +53,7 @@
 <div class="sidebar-bottom d-flex flex-wrap justify-content-around mt-4">
 
   {% if site.theme_mode == "dual" %}
-  <span id="mode-toggle-wrapper" data-toggle="tooltip" title="Mode Change">
+  <span id="mode-toggle-wrapper" data-toggle="tooltip" title="Day/Night Mode">
     {% include mode-toggle.html %}
   </span>
   <span class="icon-border"></span>

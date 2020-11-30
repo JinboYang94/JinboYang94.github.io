@@ -78,6 +78,9 @@ $sidebar-display: "sidebar-display";
   width: $sidebar-width-medium;
   z-index: 99;
   background: var(--sidebar-bg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: right center;
   a {
     @include sidebar-links;
   }
@@ -145,7 +148,7 @@ $sidebar-display: "sidebar-display";
         right: 1px;
         width: 3px;
         height: $tab-cursor-height;
-        background-color: var(--nav-cursor-color);
+        // background-color: var(--nav-cursor-color);
         pointer-events: none;
       }
     }
