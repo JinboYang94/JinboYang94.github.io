@@ -2,6 +2,7 @@
 title: Java Fundamentals
 author: Jinbo Yang
 date: 2020-11-12 14:00:00 +0800
+last_modified_at: 2020-12-02 14:00:00 +0800
 categories: [Basic, Java]
 tags: [Java, Fundamental]
 math: true
@@ -110,6 +111,10 @@ math: true
 >b = - 10 = reverse(0000 1010) + 1 = (1111 0110)32 bit = 1111 1111 1111 1111 1111 1111 1111 0110  
 >b >>> 1 = 0111 1111 1111 1111 1111 1111 1111 1011 = 2147483643  
 >so >>> means a / 2<sup>n</sup>, insert to void left with 0, and set leftmost digit to 0
+
+#### 4. Java常见数据结构及其方法
+
+
 
 ### **B. 常见Q&A**
 
