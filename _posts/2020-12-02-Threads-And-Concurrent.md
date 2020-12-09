@@ -2,7 +2,7 @@
 title: Threads and Concurrent
 author: Jinbo Yang
 date: 2020-12-02 14:00:00 +0800
-last_modified_at: 2020-12-08 23:00:00 +0800
+last_modified_at: 2020-12-09 14:00:00 +0800
 categories: [Basic, Java]
 tags: [Java, Fundamental]
 math: true
@@ -93,6 +93,7 @@ t2.start();
 ### 8. 锁对象(Lock)
 
 > synchronize关键字提供锁，后面再仔细介绍，还有Java SE 5.0后引入了ReenTrantLock类，使用方法如下：
+
 ```java
 class myLockTest {
     private Lock myLock = new ReentrantLock();
@@ -136,9 +137,71 @@ class testCondition {
 
 > 一旦一个线程调用await()，那它本身无法再激活自己，只能期待其他线程调用signalAll()来释放它，如果没有那就dead lock了。注意signalAll()并不会立即激活等待线程，只是解除阻塞，还是要竞争资源  
 
-### 10. 两个关键字synchronize和volatile
+### 10. 两个关键字synchronized和volatile
 
-- **synchronize**: 
+- **synchronized**: Java的每个对象都有一个内部锁，如果一个方法用了synchronized声明，那么对象锁会保护整个方法，能够保证在同一时刻最多只有一个线程执行该段代码，即锁对象(Lock)的用法等效于：
+
+```java
+class myLockTest {
+
+    public synchronized void doThings() {
+        // functional codes
+    }
+}
+```
+
+> 不同于锁对象的是，内部对象锁只有一个条件对象，用法如下：
+
+```java
+class testCondition {
+
+    public synchronized testCondition(int a, int b) {
+        if (a > b) {    // this now not satisfied
+            wait();
+            // functional codes here:
+            // code: some operations to change value of a and b
+            // after operation, use this to reactive other thread which might be blocked
+            notifyAll();
+        }
+    }
+}
+```
+
+> 显然通常情况下用synchronized简便很多，它还可以用于静态方法，但这种情况下锁不再是对象的内部锁，而是类的内部锁(所谓的对象锁vs类锁?)，更常用的方法是synchronized代码块，效果一样：
+
+```java
+class myLockTest {
+
+    // non-static
+    public void doThings() {
+        synchronized(this) {
+            // functional codes
+        }
+    }
+
+    // static
+    public static void something() {
+        synchronized(myLockTest.class) {
+            // functional codes
+        }
+    }
+}
+```
+
+- **volatile**: 在较低数量的实例上使用同步方法开销过大，这时候就需要vloatile这种关键字，这是一种免锁机制：
+
+```java
+private boolean sign;
+public synchronized boolean isTrue() {}
+public synchronized void setSign() {}
+
+// equals to this:
+private volatile boolean sigh;
+public boolean isTrue() {}
+public void setSign() {}
+```
+
+> volatile很少用到，大概了解就行，具体实现原理涉及JVM，还有就是volatile**不保证原子性**
 
 ### 11. 线程相关方法
 > Thread类下
@@ -153,7 +216,7 @@ class testCondition {
 - **boolean isInterrupted()**: 同上，但不改变中断状态
 - **static Thread currentThread()**: 返回代表当前正在执行线程的对象
 - **Thread(Runnable target)**: 构造新线程
-- **void start()**: 启动线程(只允许启动一次)，处于Runnable状态，一旦得到cpu资源就将调用run()开始真正运行，所有线程异步执行，这才是线程的作用
+- **void start()**: 启动线程(只允许启动一次)，处于Runnable状态，一旦得到cpu资源就将调用run()开始真正运行，所有线程异步执行，这叫并发
 - **void run()**: 其中的内容就是这个线程需要做的事，可多次调用，但是是同步执行
 - **static void sleep(long millis)**: 休眠millis毫秒
 
@@ -168,3 +231,8 @@ class testCondition {
 - **void signal()**: 随机从等待集中选择一个线程解除阻塞
 
 > Object类下
+
+- **void wait()**: 线程进入等待集，用法效果基本等同await()
+- **void wait(long millis)**: 同上，多个超时时间
+- **void notifyAll()**: 解除等待集中所有线程阻塞，基本同理signalAll()
+- **void notify()**: 随机解除一个，基本同理signal()
