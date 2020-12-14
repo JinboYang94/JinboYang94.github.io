@@ -2,7 +2,7 @@
 title: Java Fundamentals
 author: Jinbo Yang
 date: 2020-11-12 14:00:00 +0800
-last_modified_at: 2020-12-02 14:00:00 +0800
+last_modified_at: 2020-12-14 17:52:00 +0800
 categories: [Basic, Java]
 tags: [Java, Fundamental]
 math: true
@@ -63,7 +63,14 @@ math: true
 
 **Java Type Conversion**
 
+- 自动类型转换：
+> 数字表示范围小的数据类型可以自动转换成范围大的数据类型  
+>注意可能会发生数据溢出(在int/long转float/double时，具体涉及浮点数在计算机中的表示方式问题)，其他情况如乘法操作int后超出int范围赋给float也会溢出
+
 ![TypeConversion](/assets/img/sample/type_conversion.png "Java Type Conversion")
+
+- 强制类型转换：
+> 强制的把一个数据类型转换成另一种，也可能有丢失精度问题
 
 **Java Bit Manipulation**
 
@@ -112,9 +119,110 @@ math: true
 >b >>> 1 = 0111 1111 1111 1111 1111 1111 1111 1011 = 2147483643  
 >so >>> means a / 2<sup>n</sup>, insert to void left with 0, and set leftmost digit to 0
 
-#### 4. Java常见数据结构及其方法
+#### 4. Java常见数据结构/类及其方法
 
+**数据结构**
 
+- Stack: 标准LIFO
+  >(1) **boolean isEmpty()**  
+  >(2) **E push(E item)**：返回值并没有什么用  
+  >(3) **E pop()**  
+  >(4) **E peek()**  
+  >(5) **int search(Object o)**：在栈中查找o，返回1-based index，当无此Object时返回-1
+
+- Queue：标准FIFO，无论何种实现都有以下方法
+  >(1) **boolean add(E e)**  
+  >(2) **boolean offer(E e)**  
+  >(3) **E remove()**  
+  >(4) **E poll()**  
+  >(5) **E element()**  
+  >(6) **E peek()**
+
+- PriorityQueue：Queue接口的一种实现方式，还有一些Queue没有的方法：
+  >(1) **void clear()**  
+  >(2) **Comparator<? super E> comparator()**: 返回comparator，如果nature ordering返回null。另：带comparator的构造方法例如new PriorityQueue<>((TreeNode t1, TreeNode t2) -> (t1.val - t2.val))，意为按val从小到大排列，小的FIFO  
+  >(3) **boolean contains(Object o)**  
+  >(4) **Iterator<E> iterator()**  
+  >(5) **int size()**  
+  >(6) **Object[] toArray()**  
+
+- LinkedList: 也是Queue的一种实现方式(常用)
+  >(1) **void add(int index, E e)**  
+  >(2) **void addFirst(E e)**  
+  >(3) **void addLast(E e)**  
+  >(4) **void clear()**  
+  >(5) **Object clone()**: return shallow copy of LinkedList  
+  >(6) **boolean contains(Object o)**  
+  >(7) **E get(int index)**  
+  >(8) **E getFirst()**  
+  >(9) **E getLast()**  
+  >(10) **int indexOf(Object o)**: first occurance of o  
+  >(11) **int lastIndexOf(Object o)**: last occurance of o  
+  >(12) **int size()**  
+  >(13) **Object[] toArray()**  
+  >(14) **E set(int index, E element)**: replace index处的element
+
+- HashMap: 经典key-value pair
+  >(1) **void clear()**  
+  >(2) **Object clone()**: shallow copy  
+  >(3) **boolean containsKey(Object key)**  
+  >(4) **boolean containsValue(Object value)**  
+  >(5) **V get(Object key)**  
+  >(6) **boolean isEmpty()**  
+  >(7) **Set\<K> keySet()**  
+  >(8) **V put(K key, V value)**  
+  >(9) **int size()**  
+  >(10) **Collection\<V> values()**
+
+- ArrayList:
+
+**类**
+
+- String：
+
+- Integer
 
 ### **B. 常见Q&A**
 
+#### 1. Integer.MAX_VALUE and Integer.MIN_VALUE
+
+- Integer.MAX_VALUE: $$ 2^{31}-1 $$, 2147483647
+- Integer.MIN_VALUE: $$ -2^{31} $$, -2147483648
+
+#### 2. StringBuilder vs StringBuffer
+
+- 线程安全：StringBuilder非线程安全，StringBuffer线程安全，有synchronized修饰
+- 性能：StringBuilder没锁，性能远高于StringBuffer
+- 总结：单线程选StringBuilder，多线程选StringBuffer
+
+#### 3. shallow copy vs deep copy
+
+- shallow copy对基本数据类型进行值传递，对引用数据类型进行引用传递般的拷贝。即只复制值，但修改任一对象都会改变两者
+
+- deep copy对基本数据类型进行值传递，对引用数据类型，创建一个新的对象，并复制其内容。这种修改其中一个对象不会影响另一个
+
+- 判断方法：B是A的copy，如果A == B则是deep copy
+
+- deep copy方法：序列化后反序列化，会开辟新的空间存储，所以是deep copy
+
+#### 4. == vs equals()
+
+- **Primitive type**(int,float,double,byte,short,long,boolean,char)，只能用==
+
+- **Wrapper class**(Boolean,Integer,Long,Float,Double)，==比较的是指向对象的地址，比较的是栈内存中存放的对象的引用（地址），equals比较的是值
+
+- **Class object**，那么在对象的类没有重写equals()方法时，==和equals都是比较地址
+
+- **String, Data等Class**都重写了equals方法，所以==比较地址，equals比较值
+
+#### 5. 什么是序列化(serializable)
+
+- 序列化是将对象状态转换为可保持或传输的格式的过程。与序列化相对的是反序列化，它将流转换为对象。这两个过程结合起来，可以轻松地存储和传输数据。序列化必须实现Serializable接口(java.io.Serializable)
+
+- 注意在实现Serializable的类中定义一个**serialVersionUID**，具体生成可以靠插件(1L只是例子)
+  ```java
+  ANY-ACCESS-MODIFIER static final long serialVersionUID = 1L;
+  ```
+
+- 为什么要这个serialVersionUID： 
+  >它是Java为每个序列化类产生的版本标识，可用来保证在反序列时，发送方发送的和接受方接收的是可兼容的对象。大意是保证序列化和反序列化时版本兼容不会报错。如果不一致会有InvalidClassException，比如本地修改后不想共享给另一端了，就修改serialVersionUID，在另一端反序列化时就会出错
