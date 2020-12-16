@@ -8,7 +8,7 @@ tags: [Java, Fundamental]
 math: true
 # image: /assets/img/sample/avatar.png
 ---
-# Java知识点总结(长期更新)
+# Java知识点总结+复习(长期更新)
 
 ## JavaSE部分
 
@@ -175,6 +175,10 @@ math: true
   >(10) **Collection\<V> values()**
 
 - ArrayList:
+
+- Tree
+
+- BST
 
 **类**
 
