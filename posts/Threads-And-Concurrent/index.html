@@ -1,0 +1,191 @@
+<!DOCTYPE html><html lang="en" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="theme" content="Chirpy v2.6.1"><meta name="generator" content="Jekyll v4.2.0" /><meta property="og:title" content="Threads and Concurrent" /><meta name="author" content="Jinbo Yang" /><meta property="og:locale" content="en_US" /><meta name="description" content="并发和线程(看心情更新)" /><meta property="og:description" content="并发和线程(看心情更新)" /><link rel="canonical" href="https://jinboyang94.github.io/posts/Threads-And-Concurrent/" /><meta property="og:url" content="https://jinboyang94.github.io/posts/Threads-And-Concurrent/" /><meta property="og:site_name" content="Jinbo" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2020-12-02T14:00:00+08:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Threads and Concurrent" /><meta name="twitter:site" content="@Yang_Jinbo" /><meta name="twitter:creator" content="@Jinbo Yang" /><meta name="google-site-verification" content="google_meta_tag_verification" /> <script type="application/ld+json"> {"description":"并发和线程(看心情更新)","mainEntityOfPage":{"@type":"WebPage","@id":"https://jinboyang94.github.io/posts/Threads-And-Concurrent/"},"@type":"BlogPosting","author":{"@type":"Person","name":"Jinbo Yang"},"url":"https://jinboyang94.github.io/posts/Threads-And-Concurrent/","headline":"Threads and Concurrent","dateModified":"2020-12-09T14:00:00+08:00","datePublished":"2020-12-02T14:00:00+08:00","@context":"https://schema.org"}</script><title>Threads and Concurrent | Jinbo</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="cdn.jsdelivr.net"><link rel="dns-prefetch" href="cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"><link rel="preload" as="style" href="/assets/css/post.css"><link rel="stylesheet" href="/assets/css/post.css"><link rel="preload" as="style" href="/assets/css/lib/bootstrap-toc.min.css"><link rel="stylesheet" href="/assets/css/lib/bootstrap-toc.min.css" /> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script async src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.15.0,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script async src="/assets/js/post.min.js"></script> <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script> <script defer src="/app.js"></script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column"><div id="nav-wrapper"><div id="profile-wrapper" class="d-flex flex-column"><div id="avatar" class="d-flex justify-content-center"> <a href="/" alt="avatar"> <img src="/assets/img/sample/avatar.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="profile-text mt-3"><div class="site-title"> <a href="/">Jinbo</a></div><div class="site-subtitle font-italic"><b><font color=#1d9690>Welcome to my Kingdom.</font></b></div></div></div><ul class="nav flex-column"><li class="nav-item d-flex justify-content-center "> <a href="/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span data-toggle="tooltip" data-placement="right" title="HOME">HOME</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/categories/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span data-toggle="tooltip" data-placement="auto" title="CATEGORIES">CATEGORIES</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/tags/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span data-toggle="tooltip" data-placement="auto" title="TAGS">TAGS</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/archives/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span data-toggle="tooltip" data-placement="auto" title="ARCHIVES">ARCHIVES</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/about/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3 unloaded"></i> <span data-toggle="tooltip" data-placement="auto" title="ABOUT">ABOUT</span> </a></ul></div><div class="sidebar-bottom d-flex flex-wrap justify-content-around mt-4"> <span id="mode-toggle-wrapper" data-toggle="tooltip" title="Day/Night Mode"> <i class="mode-toggle fas fa-sun" dark-mode-invisible></i> <i class="mode-toggle fas fa-moon" light-mode-invisible></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.mode != null) { if (this.mode == ModeToggle.DARK_MODE) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.mode != null) { if (self.mode == ModeToggle.DARK_MODE) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span> <span class="icon-border"></span> <a href="https://github.com/JinboYang94" aria-label="Github" data-toggle="tooltip" title="Github"> <i class="fab fa-github"></i> </a> <a href="https://twitter.com/Yang_Jinbo" aria-label="Twitter" data-toggle="tooltip" title="Twitter"> <i class="fab fa-twitter"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['scottyjb94','gmail.com'].join('@')" aria-label="Email" data-toggle="tooltip" title="Email"> <i class="fas fa-envelope"></i> </a> <a href="https://linkedin.com/in/jinbo-yang" aria-label="Linkedin" data-toggle="tooltip" title="Linkedin"> <i class="fab fa-linkedin"></i> </a></div><script> $(document).ready(function(){ $('[data-toggle="tooltip"]').tooltip(); }); </script></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Posts </a> </span> <span>Threads and Concurrent</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>Threads and Concurrent</h1><div class="post-meta text-muted d-flex flex-column"><div> Posted <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Wed, Dec 2, 2020, 2:00 PM +0800" > Dec 2, 2020 <i class="unloaded">2020-12-02T14:00:00+08:00</i> </span> by <span class="author"> Jinbo Yang </span></div><div> Updated <span class="timeago lastmod" data-toggle="tooltip" data-placement="bottom" title="Wed, Dec 9, 2020, 2:00 PM +0800" > Dec 9, 2020 <i class="unloaded">2020-12-09T14:00:00+08:00</i> </span></div></div><div class="post-content"><h1 id="并发和线程看心情更新">并发和线程(看心情更新)</h1><h2 id="a-基础知识"><strong>A. 基础知识</strong></h2><h3 id="1-线程thread和进程process">1. 线程(thread)和进程(process)</h3><ul><li>线程是操作系统能够进行运算调度的最小单位，大部分情况下，它被包含在进程之中，是进程中的实际运作单位<li>进程是指计算机中已运行的程序<li><strong>多进程vs多线程</strong>：本质区别在多线程共享数据，多进程每个进程拥有自己的一整套变量</ul><h3 id="2-创建新线程常见方法">2. 创建新线程常见方法</h3><ul><li><strong>Method1</strong>: 定义Thread的子类(extends Thread)，并override其run()方法，然后new一个实例，并用start()启动</ul><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="kd">class</span> <span class="nc">Thread</span> <span class="kd">extends</span> <span class="nc">Thread</span> <span class="o">{</span>
+  <span class="o">.....</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="nc">Thread</span> <span class="n">t1</span><span class="o">=</span><span class="k">new</span> <span class="nc">Thread</span><span class="o">();</span>
+<span class="n">t1</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+</pre></table></code></div></div><ul><li><strong>Method2</strong>：定义实现Runnable接口的类(implements Runnable)，同样重写run()，然后new一个实例，并用start()启动</ul><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="kd">class</span> <span class="nc">Thread2</span> <span class="kd">implements</span> <span class="nc">Runnable</span> <span class="o">{</span>
+  <span class="o">....</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+
+  <span class="o">}</span>
+<span class="o">}</span>
+<span class="c1">// imp is the implementation of Runnable</span>
+<span class="nc">Thread2</span> <span class="n">imp</span><span class="o">=</span><span class="k">new</span> <span class="nc">Thread2</span><span class="o">();</span>
+<span class="c1">// t2 is new thread</span>
+<span class="nc">Thread</span> <span class="n">t2</span><span class="o">=</span><span class="k">new</span> <span class="nc">Thread</span><span class="o">(</span><span class="n">imp</span><span class="o">);</span>
+<span class="n">t2</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+</pre></table></code></div></div><ul><li><strong>对比</strong>: Runnable只实现了接口，还可以继承其他类，而且imp可以重复利用来创建其他新线程，Thread不能继承其他类了<li><strong>补充</strong>：其他方法还有实现Callable接口和用线程池</ul><h3 id="3-线程安全">3. 线程安全</h3><ul><li>一个类在多线程环境中被调用时，能够正确地处理多个线程之间的共享变量，使程序功能正确完成<li>主要可能是多个线程调用同一个code block的代码时，线程A的操作改变了某个变量，使线程B本应得到的结果受到了影响<li>不仅仅是在对象创建后的业务逻辑中要考虑线程的安全性，在对象创建的过程中，也要考虑线程安全</ul><h3 id="4-线程状态life-cycle">4. 线程状态(Life Cycle)</h3><ul><li><strong>New(新创建)</strong>，此时还没开始运行<li><strong>Runnable(可运行)</strong>，调用start()进入Runnable，此时不一定在运行<li><strong>Blocked(被阻塞)</strong>，当线程A试图获取一个内部对象锁，而该锁被其他线程持有，则A进入阻塞，暂时不活动，等待被激活<li><strong>Waiting(等待)</strong>，当线程A等待另一个线程B通知调度器一个条件时，A进入等待状态，常见于Object.wait/Thread.join调用中<li><strong>Timed waiting(计时等待)</strong>，Thread.sleep/Object.wait/Thread.join/Lock.tryLock/Condition.await的计时版有个超时参数，调用时会进入此状态，并保持到超时期满或其他适当的通知<li><strong>Terminated(被终止)</strong>，有两种可能，一是run()正常退出而自然死亡，二是因一个未被捕获的异常终止了run()而意外死亡</ul><h3 id="5-线程中断">5. 线程中断</h3><ul><li>没有可以强制线程终止的方法，然而interrupt()可以用来请求终止线程，线程的中断状态将被设为true，若此线程被sleep()阻塞，将抛出InterruptedException<li>每个线程都会时不时检查中断状态，用isInterrupted()，但如果线程被阻塞，会抛出InterruptedException<li>static boolean interrupted() vs boolean isInterrupted()，前者有副作用，会把中断状态重置为false，后者不会改变状态</ul><h3 id="6-线程属性">6. 线程属性</h3><h4 id="a-线程优先级priority">a. 线程优先级(Priority)</h4><blockquote><p>默认继承父类优先级，可以用setPriority()改变，在[MIN_PRIORITY, MAX_PRIORITY](即[1, 10])之间，NORM_PRIORITY为5</p></blockquote><h4 id="b-守护线程daemon">b. 守护线程(Daemon)</h4><ul><li>守护线程唯一作用是为其他线程提供服务，不应该访问任何固有资源<li>setDaemon(boolean isDaemon)来设置守护线程或用户线程</ul><h3 id="7-竞争条件race-condition">7. 竞争条件(race condition)</h3><blockquote><p>两个线程存取相同的对象，且每个线程都调用了修改该对象状态的方法，可能会造成错误的结果，解决办法：加锁</p></blockquote><h3 id="8-锁对象lock">8. 锁对象(Lock)</h3><blockquote><p>synchronize关键字提供锁，后面再仔细介绍，还有Java SE 5.0后引入了ReenTrantLock类，使用方法如下：</p></blockquote><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="kd">class</span> <span class="nc">myLockTest</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">Lock</span> <span class="n">myLock</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ReentrantLock</span><span class="o">();</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">doThings</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">myLock</span><span class="o">.</span><span class="na">lock</span><span class="o">();</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="c1">// functional codes</span>
+        <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+            <span class="n">myLock</span><span class="o">.</span><span class="na">unlock</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><blockquote><p>要注意unlock()一定要在finally block中，否则出现Exception会让其他线程永远阻塞</p></blockquote><h3 id="9-条件对象condition">9. 条件对象(Condition)</h3><blockquote><p>当线程得到锁，进入function部分准备执行时发现需要满足条件后才能执行，这时候就需要条件对象来处理，一个 锁对象可以对应多个条件对象</p><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre><td class="rouge-code"><pre><span class="kd">class</span> <span class="nc">testCondition</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">Lock</span> <span class="n">myLock</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ReentrantLock</span><span class="o">();</span>
+    <span class="kd">private</span> <span class="nc">Condition</span> <span class="n">cond</span> <span class="o">=</span> <span class="n">myLock</span><span class="o">.</span><span class="na">newCondition</span><span class="o">();</span>
+    <span class="c1">// myLock is Lock object here</span>
+    <span class="kd">public</span> <span class="nf">testCondition</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">myLock</span><span class="o">.</span><span class="na">lock</span><span class="o">();</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>    <span class="c1">// this now not satisfied</span>
+                <span class="n">cond</span><span class="o">.</span><span class="na">await</span><span class="o">();</span>
+                <span class="c1">// functional codes here:</span>
+                <span class="c1">// code: some operations to change value of a and b</span>
+                <span class="c1">// after operation, use this to reactive other thread which might be blocked</span>
+                <span class="n">cond</span><span class="o">.</span><span class="na">signalAll</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+            <span class="n">myLock</span><span class="o">.</span><span class="na">unlock</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div></blockquote><blockquote><p>一旦一个线程调用await()，那它本身无法再激活自己，只能期待其他线程调用signalAll()来释放它，如果没有那就dead lock了。注意signalAll()并不会立即激活等待线程，只是解除阻塞，还是要竞争资源</p></blockquote><h3 id="10-两个关键字synchronized和volatile">10. 两个关键字synchronized和volatile</h3><ul><li><strong>synchronized</strong>: Java的每个对象都有一个内部锁，如果一个方法用了synchronized声明，那么对象锁会保护整个方法，能够保证在同一时刻最多只有一个线程执行该段代码，即锁对象(Lock)的用法等效于：</ul><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="kd">class</span> <span class="nc">myLockTest</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">doThings</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// functional codes</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><blockquote><p>不同于锁对象的是，内部对象锁只有一个条件对象，用法如下：</p></blockquote><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="kd">class</span> <span class="nc">testCondition</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">synchronized</span> <span class="nf">testCondition</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>    <span class="c1">// this now not satisfied</span>
+            <span class="n">wait</span><span class="o">();</span>
+            <span class="c1">// functional codes here:</span>
+            <span class="c1">// code: some operations to change value of a and b</span>
+            <span class="c1">// after operation, use this to reactive other thread which might be blocked</span>
+            <span class="n">notifyAll</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><blockquote><p>显然通常情况下用synchronized简便很多，它还可以用于静态方法，但这种情况下锁不再是对象的内部锁，而是类的内部锁(所谓的对象锁vs类锁?)，更常用的方法是synchronized代码块，效果一样：</p></blockquote><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre><span class="kd">class</span> <span class="nc">myLockTest</span> <span class="o">{</span>
+
+    <span class="c1">// non-static</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">doThings</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">synchronized</span><span class="o">(</span><span class="k">this</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// functional codes</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="c1">// static</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">something</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">synchronized</span><span class="o">(</span><span class="n">myLockTest</span><span class="o">.</span><span class="na">class</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// functional codes</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><ul><li><strong>volatile</strong>: 在较低数量的实例上使用同步方法开销过大，这时候就需要vloatile这种关键字，这是一种免锁机制：</ul><div class="language-java highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="kd">private</span> <span class="kt">boolean</span> <span class="n">sign</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">synchronized</span> <span class="kt">boolean</span> <span class="nf">isTrue</span><span class="o">()</span> <span class="o">{}</span>
+<span class="kd">public</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">setSign</span><span class="o">()</span> <span class="o">{}</span>
+
+<span class="c1">// equals to this:</span>
+<span class="kd">private</span> <span class="kd">volatile</span> <span class="kt">boolean</span> <span class="n">sigh</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isTrue</span><span class="o">()</span> <span class="o">{}</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setSign</span><span class="o">()</span> <span class="o">{}</span>
+</pre></table></code></div></div><blockquote><p>volatile很少用到，大概了解就行，具体实现原理涉及JVM，还有就是volatile<strong>不保证原子性</strong></p></blockquote><h3 id="11-线程相关方法">11. 线程相关方法</h3><blockquote><p>Thread类下</p></blockquote><ul><li><strong>void setPriority(int new Priority)</strong>: 设置此线程优先级<li><strong>static void yield()</strong>: 当前进程让步，如果有其他大于等于此优先级的可运行线程则调度这些<li><strong>void setDaemon(boolean isDaemon)</strong>: 标记守护/用户线程，必须在线程启动前调用<li><strong>void join()</strong>: 当前线程A等待子线程b终止(用法A中call b.join())，在调用此方法时当前线程A阻塞，等子线程b死亡才继续执行A后续代码<li><strong>void join(long millis)</strong>: 同上，加了个超时判断<li><strong>void interrupt()</strong>: 向线程发送中断请求，线程的中断状态被设置为true<li><strong>static boolean interrupted()</strong>: 检查当前线程是否被中断，副作用是中断状态会被重置为false<li><strong>boolean isInterrupted()</strong>: 同上，但不改变中断状态<li><strong>static Thread currentThread()</strong>: 返回代表当前正在执行线程的对象<li><strong>Thread(Runnable target)</strong>: 构造新线程<li><strong>void start()</strong>: 启动线程(只允许启动一次)，处于Runnable状态，一旦得到cpu资源就将调用run()开始真正运行，所有线程异步执行，这叫并发<li><strong>void run()</strong>: 其中的内容就是这个线程需要做的事，可多次调用，但是是同步执行<li><strong>static void sleep(long millis)</strong>: 休眠millis毫秒</ul><blockquote><p>Java.util.concurrent下</p></blockquote><ul><li><strong>void lock()</strong>: 获取这个锁，如果该锁同时被另一个线程持有则阻塞<li><strong>void unlock()</strong>: 释放这个锁<li><strong>ReentrantLock()</strong>: 构造保护共享变量的锁<li><strong>Condition newCondition()</strong>: 构造锁的条件对象<li><strong>void await()</strong>: 条件不满足时调用，该线程阻塞并放入等待集，并等待其他线程的操作满足条件后用signalAll()释放阻塞<li><strong>void signalAll()</strong>: 解除该条件等待集中所有线程的阻塞<li><strong>void signal()</strong>: 随机从等待集中选择一个线程解除阻塞</ul><blockquote><p>Object类下</p></blockquote><ul><li><strong>void wait()</strong>: 线程进入等待集，用法效果基本等同await()<li><strong>void wait(long millis)</strong>: 同上，多个超时时间<li><strong>void notifyAll()</strong>: 解除等待集中所有线程阻塞，基本同理signalAll()<li><strong>void notify()</strong>: 随机解除一个，基本同理signal()</ul></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/basic/'>Basic</a>, <a href='/categories/java/'>Java</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/java/" class="post-tag no-text-decoration" >Java</a> <a href="/tags/fundamental/" class="post-tag no-text-decoration" >Fundamental</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Threads and Concurrent - Jinbo&url=https://JinboYang94.github.io/posts/Threads-And-Concurrent/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Threads and Concurrent - Jinbo&u=https://JinboYang94.github.io/posts/Threads-And-Concurrent/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=Threads and Concurrent - Jinbo&url=https://JinboYang94.github.io/posts/Threads-And-Concurrent/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>Recent Update</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/Android-Camera2-Basics/">Android Camera2 Fundamentals</a><li><a href="/posts/Java-Fundamentals/">Java Fundamentals</a><li><a href="/posts/Threads-And-Concurrent/">Threads and Concurrent</a><li><a href="/posts/Python-Fundamentals/">Python Fundamentals</a><li><a href="/posts/Computer-Networks-QA/">Computer Networks Fundamentals</a></ul></div><div id="access-tags"> <span>Trending Tags</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/fundamental/">Fundamental</a> <a class="post-tag" href="/tags/java/">Java</a> <a class="post-tag" href="/tags/android/">Android</a> <a class="post-tag" href="/tags/networks/">Networks</a> <a class="post-tag" href="/tags/python/">Python</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/Java-Fundamentals/"><div class="card-body"> <span class="timeago small" > Nov 12, 2020 <i class="unloaded">2020-11-12T14:00:00+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Java Fundamentals</h3><div class="text-muted small"><p> Java知识点总结+复习(长期更新) JavaSE部分 A. 基础知识 1. 面向过程和面向对象的区别 面向过程(Progress oriented) 优点：性能更高，因为调用类需要实例化，更消耗资源。单片机、嵌入式、Linux/Unix开发常用，因为性能是最重要的 缺点：没有面向对象易维护、易复用、易扩展 面向对象(Object oriented) 优点：易维护、易复用、易...</p></div></div></a></div><div class="card"> <a href="/posts/Android-Camera2-Basics/"><div class="card-body"> <span class="timeago small" > Apr 15 <i class="unloaded">2021-04-15T13:29:00+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Android Camera2 Fundamentals</h3><div class="text-muted small"><p> Android Camera2使用过程中的总结: A. Camera2 常用类: 1. CameraManager CameraManager是Camera2中新加入的类，用来管理摄像头相关的所有信息/内容，通过getSystemService(Context.CAMERA_SERVICE)实例化。 Docs: A system service manager for detec...</p></div></div></a></div><div class="card"> <a href="/posts/Computer-Networks-QA/"><div class="card-body"> <span class="timeago small" > Nov 28, 2020 <i class="unloaded">2020-11-28T11:00:00+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Computer Networks Fundamentals</h3><div class="text-muted small"><p> Computer Networks知识点总结(长期更新) A. 基本内容 1. 体系结构 TCP/IP 五层结构 应用层(Application Layer) -is where network applications and their application-layer protocols reside -主要通过应用进程间的通信交互来完成网络应...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/Computer-Networks-QA/" class="btn btn-outline-primary"><p>Computer Networks Fundamentals</p></a> <a href="/posts/Python-Fundamentals/" class="btn btn-outline-primary"><p>Python Fundamentals</p></a></div><div id="disqus" class="pt-2 pb-2"><p class="font-italic text-center text-muted small"> Comments powered by <a href="https://disqus.com/">Disqus</a>.</p></div><script src="/assets/js/lib/jquery.disqusloader.min.js"></script> <script> var options = { scriptUrl: '//jinboyang-cc.disqus.com/embed.js', disqusConfig: function() { this.page.url = 'https://JinboYang94.github.io/posts/Threads-And-Concurrent/'; this.page.identifier = '/posts/Threads-And-Concurrent/'; } }; $.disqusLoader('#disqus', options); </script></div></div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('#post-wrapper img'); const observer = lozad(imgs); observer.observe(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2021 <a href="https://twitter.com/username">Jinbo Yang</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy/" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4><a class="post-tag" href="/tags/fundamental/">Fundamental</a> <a class="post-tag" href="/tags/java/">Java</a> <a class="post-tag" href="/tags/android/">Android</a> <a class="post-tag" href="/tags/networks/">Networks</a> <a class="post-tag" href="/tags/python/">Python</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://JinboYang94.github.io{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>' }); </script> <script async src="https://www.googletagmanager.com/gtag/js?id=UA-178261471-1"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-178261471-1'); </script>
