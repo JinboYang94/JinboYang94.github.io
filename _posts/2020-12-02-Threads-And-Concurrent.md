@@ -25,12 +25,11 @@ math: true
 
 ```java
 class Thread extends Thread {
-    .....
-    @Override
-    public void run() {
+  .....
+  @Override
+  public void run() {
 
-    }
-
+  }
 }
 
 Thread t1=new Thread();
@@ -41,11 +40,11 @@ t1.start();
 
 ```java
 class Thread2 implements Runnable {
-    ....
-    @Override
-    public void run() {
+  ....
+  @Override
+  public void run() {
 
-    }
+  }
 }
 // imp is the implementation of Runnable
 Thread2 imp=new Thread2();

@@ -186,6 +186,14 @@ math: true
 
 - Integer
 
+#### 5. access修饰符
+
+- protected:
+
+#### 6. 数据类型互转
+
+- String <-> Char
+
 ### **B. 常见Q&A**
 
 #### 1. Integer.MAX_VALUE and Integer.MIN_VALUE
@@ -230,3 +238,17 @@ math: true
 
 - 为什么要这个serialVersionUID： 
   >它是Java为每个序列化类产生的版本标识，可用来保证在反序列时，发送方发送的和接受方接收的是可兼容的对象。大意是保证序列化和反序列化时版本兼容不会报错。如果不一致会有InvalidClassException，比如本地修改后不想共享给另一端了，就修改serialVersionUID，在另一端反序列化时就会出错
+
+  #### 6. 一些常见异常
+  
+  - NullPointerException
+
+  - IOException
+
+  - IndexOutOfBoundsException
+  
+  - ClassNotFoundException
+
+  - OutOfMemoryError
+
+  - FileNotFoundException
