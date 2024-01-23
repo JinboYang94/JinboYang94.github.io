@@ -2,17 +2,15 @@
 title: Android Camera2 Fundamentals
 author: Jinbo Yang
 date: 2021-04-15 13:29 +0800
-last_modified_at: 2021-04-15 13:29 +0800
+last_modified_at: 2021-06-11 09:21 +0800
 categories: [Android, Java, Basic]
 tags: [Android, Java, Fundamental]
 math: true
 ---
 
-## **Android Camera2使用过程中的总结:**
+## **A. Camera2 常用类**
 
-### **A. Camera2 常用类:**
-
-#### 1. CameraManager
+### 1. CameraManager
 
 > **CameraManager是Camera2中新加入的类，用来管理摄像头相关的所有信息/内容，通过getSystemService(Context.CAMERA_SERVICE)实例化。**  
 > **Docs: A system service manager for detecting, characterizing, and connecting to CameraDevices.**
@@ -35,7 +33,7 @@ math: true
 > <font color=Tan>打开或关闭摄像头的闪光灯功能</font>  
 > Source code: Set the flash unit's torch mode of the camera of the given ID without opening the camera device.
 
-#### 2. CameraDevice
+### 2. CameraDevice
 > **CameraDevice是代表连接到Android设备的某个camera，一般通过CameraDevice.StateCallback中的onOpen(CameraDevice camera)来初始化**  
 > **Docs: The CameraDevice class is a representation of a single camera connected to an Android device, allowing for fine-grain control of image capture and post-processing at high frame rates.**  
 
@@ -68,7 +66,7 @@ math: true
 > <font color=Tan>得到此camera的id，即使关闭/fatal error后都可以使用</font>  
 > **Source code:** Get the ID of this camera device. This method can be called even if the device has been closed or has encountered a serious error.
 
-#### 3. CameraCaptureSession
+### 3. CameraCaptureSession
 > **CameraCaptureSession是一个配置好的拍照会话，主要用于拍照，也用于对同一个session拍到的照片做再处理，由CameraDevice.createCaptureSession(...)的SessionConfiguration定义/CameraCaptureSession.StateCallback定义**  
 > **Doc: A configured capture session for a CameraDevice, used for capturing images from the camera or reprocessing images captured from the camera in the same session previously.**  
 
@@ -95,7 +93,7 @@ math: true
 > **Source code:** Cancel any ongoing repeating capture set by either setRepeatingRequest or setRepeatingBurst(List, CameraCaptureSession.CaptureCallback, Handler).  
 > **More:** Any currently in-flight captures will still complete, as will any burst that is mid-capture. To ensure that the device has finished processing all of its capture requests and is in ready state, wait for the {@link StateCallback#onReady} callback after calling this method.
 
-#### 4. CameraCharacteristics
+### 4. CameraCharacteristics
 > **CameraCharacteristics是用来描述一个CameraDevice的各种属性，对于给定的camera是immutable的，由CameraManager.getCameraCharacteristics(String cameraId)实例化**  
 > **Docs: The properties describing a CameraDevice.**
 
@@ -118,7 +116,7 @@ math: true
 > <font color=Tan>得到支持的key list</font>
 > **Source code:** Returns a list of the keys contained in this map.  
 
-#### 5. CaptureRequest
+### 5. CaptureRequest
 
 > **CaptureRequest是一个包含了capture设置的拍照请求，由CameraDevice.createCaptureRequest(...)得到CaptureRequest.Builder对象，再用CaptureRequest.Builder.set()配置后，用CaptureRequest.Builder.build()实例化**  
 > **Docs:An immutable package of settings and outputs needed to capture a single image from the camera device. Contains the configuration for the capture hardware (sensor, lens, flash), the processing pipeline, the control algorithms, and the output buffers. Also contains the list of target Surfaces to send image data to for this capture.**
@@ -135,9 +133,9 @@ math: true
   >- JPEG_ORIENTATION jpeg图像方向  
   >- NOISE_REDUCTION_MODE 降噪模式
 
-### **B. Camera2 Manifest常用权限**
+## **B. Camera2 Manifest常用权限**
 
-#### 1. &lt;uses-permission android:name="" android:maxSdkVersion=""&gt;
+### 1. &lt;uses-permission android:name="" android:maxSdkVersion=""&gt;
 
 > **&lt;uses-permission&gt;是为了某项操作正常运行必须给予的权限，在Manifest.xml中定义**  
 > **Docs:Requests a permission that the application must be granted in order for it to operate correctly.**
@@ -177,10 +175,38 @@ math: true
 > <font color=Tan>蓝牙权限</font>  
 > **Docs: Allows applications to connect to paired bluetooth devices.**
 
-#### 2. &lt;permission android:description="" android:icon="" android:label="" android:name="" android:permissionGroup="" android:protectionLevel=""&gt;
+### 2. &lt;permission android:description="" android:icon="" android:label="" android:name="" android:permissionGroup="" android:protectionLevel=""&gt;
 
 > **&lt;permission&gt;是声明某个权限，也在Manifest.xml中定义，其他同上。与uses-permission区别见Docs**  
 > **Docs: Declares a security permission that can be used to limit access to specific components or features of this or other applications.**  
 > **Diff(From StackOverflow):** &lt;permission&gt; is normally used when making a custom permission (e.g. when making an app that other apps can tie in to, limiting access is a must), and &lt;uses-permission&gt; is used when your app actually needs a permission it doesn't have normally.
 
-### **C. Android Camera2中常用widget**
+## **C. Android Camera2中常用widget**
+
+### 1. Button
+
+> 普通的按键，可自己override Listener来自定义onClickListener()效果
+
+### 2. SwitchCompat
+
+> 带文字的开关，效果同Switch相同，但是在低版本(<5.0)中switch样式还会是以前的样式，所以一般采用SwitchCompat
+
+### 3. TextureView
+
+> 一个界面视图，与SurfaceView相比内存消耗较高，但不像SurfaceView无法进行平移缩放等变换，也无法用常规方式截图。
+
+### 4. ImageView
+
+> 用来展示图片的视图，如bitmap/drawable
+
+### 5. ProgressBar
+
+> 进度条，有圆形和条形两种样式
+
+### 6. SearchView
+
+> 一个允许用户输入的搜索栏，并且会有搜索提示功能
+
+### 7. TextView
+
+> 文本视图，用来显示文字
