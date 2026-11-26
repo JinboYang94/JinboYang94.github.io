@@ -1,4 +1,5 @@
 ---
+published: false
 title: Android Camera2 Fundamentals
 author: Jinbo Yang
 date: 2021-04-15 13:29 +0800

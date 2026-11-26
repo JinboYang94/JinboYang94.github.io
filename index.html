@@ -1,9 +1,71 @@
 ---
-layout: home
-
-# Index page
-# v2.0
-# https://github.com/cotes2020/jekyll-theme-chirpy
-# © 2017-2019 Cotes Chung
-# MIT License
+layout: personal
+lang: en
+homepage: true
+title: Jinbo Yang
 ---
+<div class="home-grid"><aside class="profile profile-hero" id="home" aria-labelledby="profile-name">
+<div class="profile-copy">
+<h1 id="profile-name">Jinbo Yang</h1>
+<p class="profile-english-name" lang="zh-CN">杨锦波</p>
+<p class="affiliation">PhD Candidate · Beijing Institute of Technology</p>
+<p class="profile-lab">Key Laboratory of Industrial Knowledge and Data Fusion Applications</p>
+</div>
+<div class="profile-identity">
+<img class="portrait" src="{{ '/assets/img/jinbo-yang.jpg' | relative_url }}" alt="Portrait of Jinbo Yang" width="176" height="176">
+<div class="social" aria-label="Contact">
+<a href="mailto:{{ site.social.email }}" aria-label="Email Jinbo Yang" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></svg></a>
+<a href="https://www.linkedin.com/in/{{ site.linkedin.username }}/" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3h16a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1ZM6 9v9h3V9H6Zm1.5-4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3ZM11 9v9h3v-5c0-2 3-2 3 0v5h3v-6c0-4-4-4-6-2V9h-3Z"/></svg></a>
+<a href="https://github.com/{{ site.github.username }}" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.86c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02A9.6 9.6 0 0 1 12 6.82c.85 0 1.71.12 2.51.34 1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.76c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg></a>
+</div>
+</div>
+</aside><div class="home-main">
+<section id="research" class="home-section research-overview" aria-labelledby="research-title">
+<h2 id="research-title">Research Overview</h2>
+<p class="research-intro">I am a PhD candidate at Beijing Institute of Technology. I study how AI can support industrial software and manufacturing, with a focus on <strong>code generation</strong>, <strong>controllable multimodal generation</strong>, and <strong>agent reliability</strong>. My research focuses on the controllability and reliability of generative AI in industrial settings. I study how to train models to produce outputs that align with user intent and satisfy domain-specific constraints. I also use agent harnesses to improve reliability on long-horizon and complex tasks.</p>
+<p class="research-intro">Before my PhD, I earned a master’s degree at the University of Delaware and worked as a full-stack engineer at IC Realtime in the US and at the 50th Research Institute of China Electronics Technology Group Corporation. My work included multi-stream video previews, on-device video processing, integration of AI recognition and inference services, backend data services, and frontend development.</p>
+<div class="research-table-scroll" role="region" aria-label="Research questions and methods, scroll horizontally" tabindex="0">
+<table class="research-matrix" aria-label="Research questions and methods">
+<thead><tr><th scope="col">Research question</th><th scope="col">Input representation</th><th scope="col">Generation and execution</th><th scope="col">Validation and diagnosis</th><th scope="col">Feedback and revision</th></tr></thead>
+<tbody>
+<tr><th scope="row">Intent alignment<span>Natural language and code</span></th><td><strong>Capture design intent</strong><span>Link semantics, features, and parameter dependencies</span></td><td><strong>Generate from intent</strong><span>Generate executable CAD programs that support local edits</span></td><td><strong>Check semantics and geometry</strong><span>Run the program and check constraints and requested edits</span></td><td><strong>Correct local errors</strong><span>Retry using execution feedback while preserving versions and valid constraints</span></td></tr>
+<tr><th scope="row">Constraint satisfaction<span>Multimodal inputs and structures</span></th><td><strong>Encode conditions</strong><span>Represent loads, boundaries, and physical responses at multiple levels</span></td><td><strong>Guide generation</strong><span>Combine modalities and physical constraints to guide structural design</span></td><td><strong>Assess validity</strong><span>Check performance, connectivity, and constraint satisfaction</span></td><td><strong>Adapt to new domains</strong><span>Improve generalization with constrained optimization and parameter-efficient adaptation</span></td></tr>
+<tr><th scope="row">State consistency<span>Agents in dynamic environments</span></th><td><strong>Track decision inputs</strong><span>Track goals, operational constraints, observations, and their sources</span></td><td><strong>Act on current state</strong><span>Plan and call tools using the current task state</span></td><td><strong>Detect stale evidence</strong><span>Check state changes against tool feedback and independent evidence</span></td><td><strong>Recover and improve</strong><span>Retry, roll back, or hand off to a person. Collect traces and failures for analysis.</span></td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="news" class="home-section" aria-labelledby="news-title">
+<div class="section-heading"><h2 id="news-title">News</h2></div>
+<div class="experience-item"><time datetime="2026-11">2026.11</time><p>Intent2CAD released its <a class="paper-link" href="https://github.com/JinboYang94/Intent2CAD">code</a> and <a class="paper-link" href="https://huggingface.co/datasets/scottyjb/Intent2CAD">dataset</a>.</p></div>
+<div class="experience-item"><time datetime="2026-11">2026.10</time><p>Two papers are under review, one at AEI and one at TOSEM.</p></div>
+<div class="experience-item"><time datetime="2026-09">2026.09</time><p><a class="paper-link" href="https://neurips.cc/virtual/2026/loc/sydney/poster/155244">Intent2CAD</a> was accepted at <strong>NeurIPS 2026</strong>.</p></div>
+<div class="experience-item"><time datetime="2026-09">2026.09</time><p>HPG-Diff released its <a class="paper-link" href="https://github.com/JinboYang94/HPG-Diff">code</a> and <a class="paper-link" href="https://huggingface.co/datasets/scottyjb/HPGDiff">dataset</a>.</p></div>
+<div class="experience-item"><time datetime="2026-07">2026.07</time><p><a class="paper-link" href="https://doi.org/10.1016/j.asoc.2026.115899">HPG-Diff</a> was accepted by <strong>Applied Soft Computing</strong>.</p></div>
+</section>
+<section id="publications" class="home-section"><div class="section-heading"><h2>Selected Publications</h2></div>
+{% assign published = site.data.publications | where: 'status', '已发表' %}
+{% for paper in published %}
+<article class="publication">
+  <a class="publication-figure" href="{{ paper.figure | relative_url }}" aria-label="Open the full-size figure for {{ paper.title }}">
+    <img src="{{ paper.figure | relative_url }}" alt="{{ paper.figure_alt_en }}" loading="lazy">
+  </a>
+  <div>
+    <p class="publication-meta"><strong>{{ paper.venue_label }}</strong> · {{ paper.year }}</p>
+    <h3><a class="paper-link" href="{{ paper.url }}">{{ paper.title }}</a></h3>
+    <p class="authors">{{ paper.authors | escape | replace: 'Jinbo Yang', '<strong><u>Jinbo Yang</u></strong>' }}</p>
+    <p>{{ paper.description_en }}</p>
+    <div class="publication-resources"><a href="{{ paper.url }}">[Paper]</a> <a href="{{ paper.code }}">[Code]</a> <a href="{{ paper.dataset }}">[Dataset]</a></div>
+  </div>
+</article>
+{% endfor %}
+</section>
+{% unless site.exclude contains "blog" %}<section id="blog" class="home-section"><div class="section-heading"><h2>Blog</h2><a href="{{ '/blog/' | relative_url }}">All posts</a></div>{% for post in site.posts limit:3 %}{% include personal-entry.html %}{% endfor %}</section>{% endunless %}
+<section id="experience" class="home-section"><div class="section-heading"><h2>Education and Experience</h2></div>
+<div class="experience-item"><time>2022.09 — present</time><p><strong>Beijing Institute of Technology</strong> · PhD candidate</p></div>
+<div class="experience-item"><time>2021.03 — 2022.08</time><p><strong>50th Research Institute, China Electronics Technology Group Corporation</strong> · Full-stack engineer</p></div>
+<div class="experience-item"><time>2019.09 — 2020.09</time><p><strong>IC Realtime</strong> · Full-stack engineer</p></div>
+<div class="experience-item"><time>2017.09 — 2019.06</time><p><strong>University of Delaware</strong> · Master’s degree</p></div>
+<div class="experience-item"><time>2012.09 — 2016.06</time><p><strong>Wuhan University of Technology</strong> · Bachelor’s degree</p></div>
+</section>
+</div></div>

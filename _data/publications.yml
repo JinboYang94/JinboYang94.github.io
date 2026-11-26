@@ -1,0 +1,39 @@
+- title: 'Intent2CAD: How Semantic-Parametric Supervision Shapes Text-to-CAD Generation'
+  venue_label: NeurIPS
+  year: 2026
+  figure: /assets/img/Intent2CAD-framework.png
+  figure_alt_en: Workflow for constructing semantic and parametric CAD representations
+  description_en: We study how supervision over features and parameter relationships shapes the generation and editing of CAD programs from text.
+  figure_alt: 从基础 CAD 程序到语义与参数表示的构建流程
+  code: https://github.com/JinboYang94/Intent2CAD
+  dataset: https://huggingface.co/datasets/scottyjb/Intent2CAD
+  url: 'https://neurips.cc/virtual/2026/loc/sydney/poster/155244'
+  authors: 'Jinbo Yang, Mingyue Yuan, Shikai Jing'
+  venue: 'NeurIPS 2026'
+  status: '已发表'
+  description: '通过语义—结构—参数关联的监督表示，研究自然语言驱动的参数化 CAD 生成与编辑。'
+- title: 'HPG-Diff: Hierarchical Physics-Guided Diffusion with Differentiable Connectivity Constraints for Topology Optimization'
+  venue_label: Applied Soft Computing
+  year: 2026
+  figure: /assets/img/HPG-Diff-framework.png
+  figure_alt_en: Architecture of the hierarchically guided diffusion model
+  description_en: We guide diffusion with physical fields at multiple scales and use a differentiable connectivity constraint to generate connected structures under specified loads and supports.
+  figure_alt: 分层物理引导与连通性约束的扩散模型架构
+  code: https://github.com/JinboYang94/HPG-Diff
+  dataset: https://huggingface.co/datasets/scottyjb/HPGDiff
+  url: 'https://doi.org/10.1016/j.asoc.2026.115899'
+  authors: 'Jinbo Yang, Mingyue Yuan, Boyuan Zhang, Yoshifumi Kitamura, Shikai Jing'
+  venue: 'Applied Soft Computing'
+  status: '已发表'
+  description: '融合层级物理引导与可微连通性约束，提升拓扑优化中的多模态可控生成能力。'
+- title: 'State-Aware Decision Consistency for LLM Agents in Dynamic Manufacturing'
+  authors: 'Jinbo Yang, et al.'
+  venue: 'Advanced Engineering Informatics'
+  status: '审稿中'
+  description: '面向动态制造任务，研究结构化状态管理、决策一致性与 Agent 的可靠执行。'
+- title: 'DesignEvo: Recovering and Tracking Repository-Level Design Systems Across Commits'
+  authors: 'Mingyue Yuan, Jinbo Yang, et al.'
+  venue: 'Transactions on Software Engineering and Methodology'
+  status: '审稿中'
+  contribution: '共同一作'
+  description: '跨代码提交恢复与追踪仓库级设计系统。'

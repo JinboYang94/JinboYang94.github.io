@@ -1,0 +1,15 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: 'zh-CN' }}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">{% seo %}<link rel="icon" href="{{ '/assets/img/favicons/favicon.ico' | relative_url }}"><link rel="stylesheet" href="{{ '/assets/css/personal.css' | relative_url }}">{% if page.layout == 'post' %}<link rel="stylesheet" href="{{ '/assets/css/reading.css' | relative_url }}">{% endif %}</head>
+{% if page.lang == 'en' %}
+  {% assign home_url = '/' %}
+  {% assign switch_url = '/zh/' %}
+  {% assign labels = 'Home|News|Publications|切换到中文|Skip to content|Main navigation' | split: '|' %}
+{% else %}
+  {% assign home_url = '/zh/' %}
+  {% assign switch_url = '/' %}
+  {% assign labels = '主页|近况|学术论文|Switch to English|跳至正文|主导航' | split: '|' %}
+{% endif %}
+<body{% if page.homepage %} class="homepage-layout"{% endif %}><a class="skip-link" href="#main-content">{{ labels[4] }}</a><header class="site-header"><a class="brand" href="{{ home_url | relative_url }}">Jinbo' Log</a><nav aria-label="{{ labels[5] }}"><a href="{{ home_url | relative_url }}">{{ labels[0] }}</a><a href="{{ home_url | relative_url }}#news">{{ labels[1] }}</a><a href="{{ home_url | relative_url }}#publications">{{ labels[2] }}</a>{% unless site.exclude contains "blog" %}<a href="{{ '/blog/' | relative_url }}" {% if page.url contains '/blog/' or page.layout == 'post' %}aria-current="page"{% endif %}>Blog</a>{% endunless %}{% if page.homepage %}<a class="language-switch" aria-label="{{ labels[3] }}" href="{{ switch_url | relative_url }}" lang="{% if page.lang == 'en' %}zh-CN{% else %}en{% endif %}" onclick="this.hash = location.hash">中/EN</a>{% endif %}</nav></header><main id="main-content">{{ content }}</main><footer><span>© {{ 'now' | date: '%Y' }} Jinbo Yang</span>{% unless site.exclude contains "blog" %}<a href="{{ '/feed.xml' | relative_url }}">RSS</a>{% endunless %}</footer></body></html>

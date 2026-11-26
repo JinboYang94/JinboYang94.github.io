@@ -1,0 +1,6 @@
+---
+layout: personal
+title: Blog
+---
+<section class="blog-intro"><p class="eyebrow">BLOG</p><h1>文字与记录</h1><p class="description">技术笔记、学习心得，以及生活中的一些思考。</p></section>
+<section aria-label="文章列表">{% for post in site.posts %}{% include personal-entry.html %}{% endfor %}</section>

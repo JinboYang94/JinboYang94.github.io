@@ -1,4 +1,5 @@
 ---
+published: false
 title: Deep learning cs230
 author: Jinbo Yang
 date: 2023-03-01 21:00:00 +0800

@@ -22,7 +22,7 @@ url: 'https://JinboYang94.github.io'
 
 author: Jinbo Yang                  # change to your full name
 
-avatar: /assets/img/sample/avatar.jpg   # support internet resources
+avatar: /assets/img/jinbo-yang.jpg   # support internet resources
 
 github:
   username: JinboYang94             # change to your github username
@@ -86,7 +86,7 @@ theme_mode: dual
 # boolean type, the global switch for ToC in posts.
 toc: true
 
-paginate: 10
+# Blog lists all posts on one page.
 
 markdown: kramdown
 
@@ -101,7 +101,7 @@ kramdown:
     span:
       line_numbers: false
     block:
-      line_numbers: true
+      line_numbers: false
       start_line: 1
 
 # DO NOT change this unless you're a Pro user on Jekyll and Web development,
@@ -187,6 +187,9 @@ compress_html:
     envs: []
 
 exclude:
+  # Temporarily hide the blog. Remove these two entries to restore it.
+  - _posts
+  - blog
   - vendor
   - Gemfile.lock
   - Gemfile
